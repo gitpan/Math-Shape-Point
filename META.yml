@@ -1,0 +1,25 @@
+---
+abstract: 'a 2d point object in cartesian space with utility angle methods '
+author:
+  - 'David Farrell <sillymoos@cpan.org>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.130880'
+license: unknown
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Math-Shape-Point
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Math::Trig: 0
+  Method::Signatures: 0
+  Regexp::Common: 0
+  perl: 5.006
+version: 0.01
