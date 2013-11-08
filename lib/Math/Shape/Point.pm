@@ -5,8 +5,9 @@ use warnings;
 use Method::Signatures;
 use Math::Trig ':pi';
 use Regexp::Common;
+use Carp /croak/;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 =head1 NAME
 
@@ -14,7 +15,7 @@ Math::Shape::Point - a 2d point object in cartesian space with utility angle met
 
 =head1 DESCRIPTION
 
-This module is designed to provide some useful 2d functions for manipulating point shapes in cartesian space. Apart from storing its location and direction and providing the usual get/set methods, the point object can rotate around another point, calculate the distance to and the angle to another point. The module uses cartesian coordinates and radians throughout.
+This module is designed to provide some useful 2d functions for manipulating point shapes in cartesian space. Advanced features include rotating around another point, calculating the distance to a point and the calculating the angle to another point. The module uses cartesian coordinates and radians throughout.
 
 =head1 SYNOPSIS
 
@@ -24,9 +25,8 @@ This module is designed to provide some useful 2d functions for manipulating poi
     my $p0 = Math::Shape::Point->new(0, 0, 0);
     my $p1 = Math::Shape::Point->new(5, 5, 0);
     $p0->rotateAboutPoint($p1, pip2);
-    $p0->getAngleToPoint($p1);
-    $p0->getDistanceToPoint($p1);
-
+    my $angle = $p0->getAngleToPoint($p1);
+    my $distance = $p0->getDistanceToPoint($p1);
 
 =head1 METHODS
 
@@ -44,6 +44,7 @@ func new ($class, $x where { $_ =~ /$RE{num}{real}/ }, $y where { $_ =~ /$RE{num
     };
     return bless $self, $class;
 }
+
 
 =head2 getLocation
 
@@ -65,6 +66,7 @@ Sets the point's location in cartesian coordinates. Requires two numbers as inpu
 method setLocation ($x where { $_ =~ /$RE{num}{real}/ }, $y where { $_ =~ /$RE{num}{real}/ } ) {
     $self->{x} = $x;
     $self->{y} = $y;
+    1;
 }
 
 
@@ -87,6 +89,7 @@ Sets the current facing direction in radians.
 
 method setDirection ($r where { $_ =~ /$RE{num}{real}/ } ) {
     $self->{r} = $self->normalizeRadian($r);
+    1;
 }
 
 
@@ -99,6 +102,7 @@ Requires a numeric distance argument - moves the point forward that distance in 
 method advance ($distance where { $_ > 0 } where { $_ =~ /$RE{num}{real}/ } ) {
     $self->{x} += int(sin($self->{r}) * $distance);
     $self->{y} += int(cos($self->{r}) * $distance);
+    1;
 }
 
 
@@ -110,6 +114,7 @@ Updates the point's facing direction by radians.
 
 method rotate ($r where { $_ =~ /$RE{num}{real}/ } ) {
     $self->{r} = $self->{r} + $self->normalizeRadian($r);
+    1;
 }
 
 
@@ -124,6 +129,7 @@ method rotateAboutPoint (Math::Shape::Point $origin, $r where { $_ =~ /$RE{num}{
     $self->{x} = $origin->{x} + int(cos($r) * ($self->{x} - $origin->{x}) - sin($r) * ($self->{y} - $origin->{y}));
     $self->{y} = $origin->{y} + int(sin($r) * ($self->{x} - $origin->{x}) + cos($r) * ($self->{y} - $origin->{y}));
     $self->rotate($r);
+    1;
 }
 
 
@@ -145,16 +151,39 @@ Returns the angle of another point object. Requires a point as an argument.
 =cut
 
 method getAngleToPoint (Math::Shape::Point $p) {
+
+    # check points are not at the same location
+    if ($self->getLocation->[0] == $p->getLocation->[0]
+        && $self->getLocation->[1] == $p->getLocation->[1]) 
+    {
+        croak 'Error: points are at the same location';
+    }
+    
     my $atan = atan2($p->{y} - $self->{y}, $p->{x} - $self->{x});
+
     if ($atan <= 0) { # lower half
-        return abs($atan) + pip2;
+        return abs($atan) + pip2 + $self->getDirection;
     }
     elsif ($atan <= pip2)  { # upper right quadrant
-        return abs($atan - pip2);
+        return abs($atan - pip2) + $self->getDirection;
     }
     else { # upper left quadrant
-        return pi2 - $atan + pip2;
+        return pi2 - $atan + pip2 + $self->getDirection;
     }
+}
+
+=head2 getDirectionToPoint
+
+Returns the direction of another point objection as a string (front, right, back or left). Assumes a 90 degree angle per direction.  Requires a point object as an argument.
+
+=cut
+
+method getDirectionToPoint (Math::Shape::Point $p) {
+    my $angle = $self->getAngleToPoint($p);
+    if    ($angle > 0 - pip4  && $angle <= pip4)      { return 'front' }
+    elsif ($angle > pip4      && $angle <= pi - pip4) { return 'right' }
+    elsif ($angle > pi - pip4 && $angle <= pi + pip4) { return 'back'  }
+    return 'left';
 }
 
 =head2 normalizeRadian
@@ -163,7 +192,7 @@ Takes a radian argument and returns it between 0 and PI2. Negative numbers are a
 
 =cut
 
-method normalizeRadian ($radians) {
+method normalizeRadian ($radians where { $_ =~ /$RE{num}{real}/ }) {
     my $piDecimal = ($radians / pi2 - int($radians / pi2));
     return $piDecimal < 0 ? pi2 + $piDecimal * pi2 : $piDecimal * pi2;
 }
