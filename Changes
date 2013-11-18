@@ -1,5 +1,8 @@
 Revision history for Math-Shape-Point
 
+0.03    2013-11-17
+        - Updated POD.
+
 0.02    2013-11-07
         - Added getDirection method, additional tests and croak on getAngle method.
 
