@@ -5,9 +5,9 @@ use warnings;
 use Method::Signatures;
 use Math::Trig ':pi';
 use Regexp::Common;
-use Carp /croak/;
+use Carp 'croak';
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 =head1 NAME
 

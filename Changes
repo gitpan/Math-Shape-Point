@@ -1,4 +1,6 @@
 Revision history for Math-Shape-Point
+0.04    2014-01-05
+        - Fixed unquoted string from line 8 of Point.pm
 
 0.03    2013-11-17
         - Updated POD.
