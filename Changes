@@ -1,13 +1,5 @@
 Revision history for Math-Shape-Point
-0.04    2014-01-05
-        - Fixed unquoted string from line 8 of Point.pm
 
-0.03    2013-11-17
-        - Updated POD.
-
-0.02    2013-11-07
-        - Added getDirection method, additional tests and croak on getAngle method.
-
-0.01    2013-11-03
-        - First version, released on an unsuspecting world.
+0.05    2014/08/16
+        -Add meta link to GitHub
 
