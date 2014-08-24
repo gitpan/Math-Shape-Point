@@ -30,7 +30,6 @@
          "requires" : {
             "Carp" : "0",
             "Math::Trig" : "0",
-            "Method::Signatures" : "0",
             "Regexp::Common" : "0",
             "strict" : "0",
             "warnings" : "0"
@@ -52,6 +51,6 @@
          "web" : "https://github.com/sillymoose/Math-Shape-Point"
       }
    },
-   "version" : "0.07"
+   "version" : "0.08"
 }
 

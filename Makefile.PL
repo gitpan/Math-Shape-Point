@@ -22,7 +22,6 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Carp" => 0,
     "Math::Trig" => 0,
-    "Method::Signatures" => 0,
     "Regexp::Common" => 0,
     "strict" => 0,
     "warnings" => 0
@@ -30,7 +29,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Test::More" => 0
   },
-  "VERSION" => "0.07",
+  "VERSION" => "0.08",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -40,7 +39,6 @@ my %WriteMakefileArgs = (
 my %FallbackPrereqs = (
   "Carp" => 0,
   "Math::Trig" => 0,
-  "Method::Signatures" => 0,
   "Regexp::Common" => 0,
   "Test::More" => 0,
   "strict" => 0,
