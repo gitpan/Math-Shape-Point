@@ -1,5 +1,5 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '0.05';
+$Math::Shape::Point::VERSION = '0.06';
 use strict;
 use warnings;
 use Method::Signatures;
@@ -128,7 +128,7 @@ Math::Shape::Point
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -147,7 +147,9 @@ This module is designed to provide some useful 2d functions for manipulating poi
 
 =head1 NAME
 
-Math::Shape::Point - a 2d point object in cartesian space with utility angle methods 
+Math::Shape::Point - a 2d point object in cartesian space with utility angle methods
+
+=for html <a href="https://travis-ci.org/sillymoose/Math-Shape-Point-pm.png"><img src="https://travis-ci.org/sillymoose/Math-Shape-Point-pm.png alt="Math-Shape-Point-pm"></a>
 
 =head1 METHODS
 

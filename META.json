@@ -1,10 +1,10 @@
 {
-   "abstract" : "a 2d point object in cartesian space with utility angle methods ",
+   "abstract" : "a 2d point object in cartesian space with utility angle methods",
    "author" : [
       "David Farrell <sillymoos@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.141170",
+   "generated_by" : "Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.141170",
    "license" : [
       "perl_5"
    ],
@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "develop" : {
@@ -38,7 +38,6 @@
       },
       "test" : {
          "requires" : {
-            "Data::Dumper" : "0",
             "Test::More" : "0",
             "perl" : "5.006"
          }
@@ -53,6 +52,6 @@
          "web" : "https://github.com/sillymoose/Math-Shape-Point"
       }
    },
-   "version" : "0.05"
+   "version" : "0.06"
 }
 
