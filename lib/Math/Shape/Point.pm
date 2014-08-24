@@ -1,11 +1,13 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '0.06';
+$Math::Shape::Point::VERSION = '0.07';
 use strict;
 use warnings;
 use Method::Signatures;
 use Math::Trig ':pi';
 use Regexp::Common;
 use Carp 'croak';
+
+#ABSTRACT: a 2d point object in cartesian space with utility angle methods
 
 
 func new ($class, $x where { $_ =~ /$RE{num}{real}/ }, $y where { $_ =~ /$RE{num}{real}/ }, $r where { $_ =~ /$RE{num}{real}/ }) {
@@ -124,11 +126,11 @@ __END__
 
 =head1 NAME
 
-Math::Shape::Point
+Math::Shape::Point - a 2d point object in cartesian space with utility angle methods
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -145,11 +147,7 @@ version 0.06
 
 This module is designed to provide some useful 2d functions for manipulating point shapes in cartesian space. Advanced features include rotating around another point, calculating the distance to a point and the calculating the angle to another point. The module uses cartesian coordinates and radians throughout.
 
-=head1 NAME
-
-Math::Shape::Point - a 2d point object in cartesian space with utility angle methods
-
-=for html <a href="https://travis-ci.org/sillymoose/Math-Shape-Point-pm.png"><img src="https://travis-ci.org/sillymoose/Math-Shape-Point-pm.png alt="Math-Shape-Point-pm"></a>
+=for HTML <a href="https://travis-ci.org/sillymoose/Math-Shape-Point"><img src="https://travis-ci.org/sillymoose/Math-Shape-Point.svg?branch=master"></a>
 
 =head1 METHODS
 
