@@ -27,9 +27,10 @@ my %WriteMakefileArgs = (
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "Test::Exception" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.08",
+  "VERSION" => "0.09",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -40,6 +41,7 @@ my %FallbackPrereqs = (
   "Carp" => 0,
   "Math::Trig" => 0,
   "Regexp::Common" => 0,
+  "Test::Exception" => 0,
   "Test::More" => 0,
   "strict" => 0,
   "warnings" => 0

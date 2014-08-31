@@ -1,5 +1,5 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '0.09';
+$Math::Shape::Point::VERSION = '1.00';
 use strict;
 use warnings;
 use Math::Trig ':pi';
@@ -47,6 +47,27 @@ sub set_direction {
 sub advance {
     $_[0]->{x} += int(sin($_[0]->{r}) * $_[1]);
     $_[0]->{y} += int(cos($_[0]->{r}) * $_[1]);
+    1;
+}
+
+
+sub retreat {
+    $_[0]->{x} -= int(sin($_[0]->{r}) * $_[1]);
+    $_[0]->{y} -= int(cos($_[0]->{r}) * $_[1]);
+    1;
+}
+
+
+sub move_left {
+    $_[0]->{x} += int(sin( $_[0]->{r} - pip2 ) * $_[1]);
+    $_[0]->{y} += int(cos( $_[0]->{r} - pip2 ) * $_[1]);
+    1;
+}
+
+
+sub move_right {
+    $_[0]->{x} += int(sin( $_[0]->{r} + pip2 ) * $_[1]);
+    $_[0]->{y} += int(cos( $_[0]->{r} + pip2 ) * $_[1]);
     1;
 }
 
@@ -126,7 +147,7 @@ Math::Shape::Point - a 2d point object in cartesian space with utility angle met
 
 =head1 VERSION
 
-version 0.09
+version 1.00
 
 =head1 SYNOPSIS
 
@@ -183,6 +204,24 @@ Sets the current facing direction in radians.
 Requires a numeric distance argument - moves the point forward that distance in Cartesian coordinates towards the direction it is facing.
 
     $p->advance(5);
+
+=head2 retreat
+
+Requires a numeric distance argument - moves the point backwards that distance in Cartesian coordinates from the direction it is facing.
+
+    $p->retreat(5);
+
+=head2 move_left
+
+Requires a numeric distance argument - moves the point that distance to the left.
+
+    $p->move_left(3);
+
+=head2 move_right
+
+Requires a numeric distance argument - moves the point that distance to the right.
+
+    $p->move_right(7);
 
 =head2 rotate
 

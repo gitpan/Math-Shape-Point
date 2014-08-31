@@ -3,6 +3,7 @@ abstract: 'a 2d point object in cartesian space with utility angle methods'
 author:
   - 'David Farrell <sillymoos@cpan.org>'
 build_requires:
+  Test::Exception: '0'
   Test::More: '0'
   perl: '5.006'
 configure_requires:
@@ -23,4 +24,4 @@ requires:
 resources:
   homepage: https://github.com/sillymoose/Math-Shape-Point
   repository: https://github.com/sillymoose/Math-Shape-Point.git
-version: '0.08'
+version: '0.09'
