@@ -37,7 +37,6 @@
       },
       "test" : {
          "requires" : {
-            "Test::Exception" : "0",
             "Test::More" : "0",
             "perl" : "5.006"
          }
@@ -52,6 +51,6 @@
          "web" : "https://github.com/sillymoose/Math-Shape-Point"
       }
    },
-   "version" : "0.09"
+   "version" : "0.08"
 }
 
