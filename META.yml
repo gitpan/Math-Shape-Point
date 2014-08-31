@@ -24,4 +24,4 @@ requires:
 resources:
   homepage: https://github.com/sillymoose/Math-Shape-Point
   repository: https://github.com/sillymoose/Math-Shape-Point.git
-version: '1.03'
+version: '1.05'

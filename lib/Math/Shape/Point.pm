@@ -1,5 +1,5 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '1.03';
+$Math::Shape::Point::VERSION = '1.05';
 use strict;
 use warnings;
 use 5.008;
@@ -84,8 +84,11 @@ sub rotate_about_point {
     my ($self, $origin, $r) = @_;
 
     my $nr = $self->normalize_radian($r);
-    my $s = sin $r;
-    my $c = cos $r;
+#    $nr = $nr > 0 ? pi2 - $nr
+#                  : abs $nr;
+
+    my $s = sin $nr;
+    my $c = cos $nr;
 
     $self->{x} -= $origin->{x};
     $self->{y} -= $origin->{y};
@@ -95,8 +98,8 @@ sub rotate_about_point {
     my $ynew = $self->{x} * $s + $self->{y} * $c;
 
     # translate point back:
-    $self->{x} = $xnew + $origin->{x};
-    $self->{y} = $ynew + $origin->{y};
+    $self->{x} = int $xnew + $origin->{x};
+    $self->{y} = int $ynew + $origin->{y};
 
     $self->rotate($r);
     1;
@@ -192,7 +195,7 @@ Math::Shape::Point - a 2d point object in cartesian space with utility angle met
 
 =head1 VERSION
 
-version 1.03
+version 1.05
 
 =head1 SYNOPSIS
 
