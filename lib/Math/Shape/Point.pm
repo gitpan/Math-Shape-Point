@@ -1,7 +1,8 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '1.00';
+$Math::Shape::Point::VERSION = '1.01';
 use strict;
 use warnings;
+use 5.008;
 use Math::Trig ':pi';
 use Regexp::Common;
 use Carp 'croak';
@@ -73,7 +74,7 @@ sub move_right {
 
 
 sub rotate {
-    $_[0]->{r} = $_[0]->{r} + $_[0]->normalize_radian($_[1]);
+    $_[0]->{r} = $_[0]->normalize_radian($_[0]->{r} + $_[1]);
     1;
 }
 
@@ -129,8 +130,35 @@ sub get_direction_to_point {
 
 sub normalize_radian {
     my ($self, $radians) = @_;
-    my $piDecimal = ($radians / pi2 - int($radians / pi2));
+    my $piDecimal = $radians / pi2 - int($radians / pi2);
     return $piDecimal < 0 ? pi2 + $piDecimal * pi2 : $piDecimal * pi2;
+}
+
+
+sub print_coordinates {
+    my $self = shift;
+
+    print "Coordinates x: $self->{x}, y: $self->{y}, r: $self->{r}\n";
+
+    # print grid
+    my $min_x = $self->{x} + -10;
+    my $max_x = $self->{x} + 10;
+    my $min_y = $self->{y} + -10;
+    my $max_y = $self->{y} + 10;
+
+    print '   ';
+    for ($min_x..$max_x) { printf "%3s", $_ }
+    printf "%3s", "x\n";
+    for my $y (reverse $min_y..$max_y) {
+        printf "%3s", $y;
+        for my $x ($min_x..$max_x) {
+               if ($self->{x} == $x && $self->{y} == $y) { printf "%3s", '@' }
+             else { printf "%3s", '.' }
+        }
+        print "\n";
+    }
+    printf "%3s", "y\n";
+    1;
 }
 
 1;
@@ -147,7 +175,7 @@ Math::Shape::Point - a 2d point object in cartesian space with utility angle met
 
 =head1 VERSION
 
-version 1.00
+version 1.01
 
 =head1 SYNOPSIS
 
@@ -258,6 +286,10 @@ Returns the direction of another point objection as a string (front, right, back
 =head2 normalize_radian
 
 Takes a radian argument and returns it between 0 and PI2. Negative numbers are assumed to be backwards (e.g. -1.57 == PI + PI / 2)
+
+=head2 print_coordinates
+
+Prints a small grid and indicates the location of the point with an '@'.
 
 =head1 AUTHOR
 
