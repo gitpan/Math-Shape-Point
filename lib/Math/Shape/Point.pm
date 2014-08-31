@@ -1,5 +1,5 @@
 package Math::Shape::Point;
-$Math::Shape::Point::VERSION = '1.01';
+$Math::Shape::Point::VERSION = '1.03';
 use strict;
 use warnings;
 use 5.008;
@@ -13,12 +13,13 @@ use Carp 'croak';
 sub new {
     croak 'Incorrect number of arguments for new()' unless @_ == 4;
     my ($class, $x, $y, $r) = @_;
-    my $self = { 
-        x => $x,
-        y => $y,
-        r => $r,
-    };
-    return bless $self, $class;
+    my $self =  bless { x => $x,
+                        y => $y,
+                        r => 0,
+                      },
+                      $class;
+    $self->rotate($r);
+    return $self;
 }
 
 
@@ -81,9 +82,22 @@ sub rotate {
 
 sub rotate_about_point {
     my ($self, $origin, $r) = @_;
-    $r = $self->normalize_radian($r);
-    $self->{x} = $origin->{x} + int(cos($r) * ($self->{x} - $origin->{x}) - sin($r) * ($self->{y} - $origin->{y}));
-    $self->{y} = $origin->{y} + int(sin($r) * ($self->{x} - $origin->{x}) + cos($r) * ($self->{y} - $origin->{y}));
+
+    my $nr = $self->normalize_radian($r);
+    my $s = sin $r;
+    my $c = cos $r;
+
+    $self->{x} -= $origin->{x};
+    $self->{y} -= $origin->{y};
+
+    # rotate point
+    my $xnew = $self->{x} * $c - $self->{y} * $s;
+    my $ynew = $self->{x} * $s + $self->{y} * $c;
+
+    # translate point back:
+    $self->{x} = $xnew + $origin->{x};
+    $self->{y} = $ynew + $origin->{y};
+
     $self->rotate($r);
     1;
 }
@@ -130,8 +144,11 @@ sub get_direction_to_point {
 
 sub normalize_radian {
     my ($self, $radians) = @_;
-    my $piDecimal = $radians / pi2 - int($radians / pi2);
-    return $piDecimal < 0 ? pi2 + $piDecimal * pi2 : $piDecimal * pi2;
+
+    my $pi_ratio = $radians / pi2;
+    $pi_ratio < 1
+        ? $radians
+        : $radians - pi2 * int $pi_ratio;
 }
 
 
@@ -175,7 +192,7 @@ Math::Shape::Point - a 2d point object in cartesian space with utility angle met
 
 =head1 VERSION
 
-version 1.01
+version 1.03
 
 =head1 SYNOPSIS
 
@@ -262,7 +279,7 @@ Updates the point's facing direction by radians.
 Rotates the point around another point of origin. Requires a point object and the angle in radians to rotate. This method updates the facing direction of the point object, as well as it's location.
 
     my $p1 = Math::Shape::Point->new(0, 0, 0); #new point at 0,0 facing 0 radians.
-    my $p2 = Math::Shape::Point->new(1, 2, 3.14); #new point at 1,2 facing 3.14 radians.
+    my $p2 = Math::Shape::Point->new(1, 2, 0); #new point at 1,2 facing 0 radians.
     $p1->rotate_about_point($p2, 3.14);
 
 =head2 get_distance_to_point
